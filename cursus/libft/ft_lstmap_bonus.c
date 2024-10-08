@@ -6,12 +6,22 @@
 /*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:15:43 by vpoka             #+#    #+#             */
-/*   Updated: 2024/10/08 19:40:28 by vpoka            ###   ########.fr       */
+/*   Updated: 2024/10/08 21:45:49 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/**
+ * @brief Applies a function to each element of a list and creates a new list
+ *        resulting from the successive applications of the function.
+ * 
+ * @param lst The address of a pointer to an element.
+ * @param f The address of the function used to iterate on the list.
+ * @param del The address of the function used to delete the content of an element if needed.
+ * 
+ * @return The new list. NULL if the allocation fails.
+ */
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*res;
