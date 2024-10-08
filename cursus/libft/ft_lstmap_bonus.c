@@ -6,7 +6,7 @@
 /*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:15:43 by vpoka             #+#    #+#             */
-/*   Updated: 2024/10/08 20:34:04 by vpoka            ###   ########.fr       */
+/*   Updated: 2024/10/08 19:40:28 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,20 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*res;
 	t_list	*new;
-	void	*new_content;
 
 	if (!lst || !f || !del)
 		return (NULL);
 	res = NULL;
 	while (lst)
 	{
-		new_content = f(lst->content);
-		new = ft_lstnew(new_content);
+		new = ft_lstnew(f(lst->content));
 		if (!new)
 		{
 			ft_lstclear(&res, del);
+			ft_lstdelone(new, del);
 			return (NULL);
 		}
-		if (!res)
-			res = new;
-		else
-			ft_lstadd_back(&res, new);
+		ft_lstadd_back(&res, new);
 		lst = lst->next;
 	}
 	return (res);
