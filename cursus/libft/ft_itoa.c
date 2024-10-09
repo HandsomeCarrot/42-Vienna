@@ -6,7 +6,7 @@
 /*   By: vpoka <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 15:12:36 by vpoka             #+#    #+#             */
-/*   Updated: 2024/09/30 19:13:38 by vpoka            ###   ########.fr       */
+/*   Updated: 2024/10/09 14:17:29 by vpoka            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,32 +17,33 @@
  *
  * This function calculates the number of digits required to represent
  * the given integer `n`. It handles both positive and negative integers.
+ * If it is negative it adds one for the minus sign.
  *
  * @param n The integer whose digits are to be counted.
  * @return The number of digits in the integer `n`.
  */
-static int	count_nums(int n)
+static int	count_digits(int n)
 {
-	int	res;
+	int	result;
 
-	res = 0;
+	result = 0;
 	if (n == INT_MIN)
-		res = 11;
+		result = 11;
 	else
 	{
 		if (n < 0)
 		{
-			res++;
+			result++;
 			n = -n;
 		}
 		while (n > 9)
 		{
 			n /= 10;
-			res++;
+			result++;
 		}
-		res++;
+		result++;
 	}
-	return (res);
+	return (result);
 }
 
 /**
@@ -88,25 +89,25 @@ static void	convert(char *dst, int n, int pos)
  */
 char	*ft_itoa(int n)
 {
-	char	*res;
-	int		nums;
+	char	*result;
+	int		digits;
 
-	nums = count_nums(n);
-	res = malloc((nums + 1) * sizeof(char));
-	if (!res)
+	digits = count_digits(n);
+	result = malloc((digits + 1) * sizeof(char));
+	if (!result)
 		return (NULL);
-	convert(res, n, nums - 1);
+	convert(result, n, digits - 1);
 	if (n < 0)
-		*res = '-';
-	res[nums] = '\0';
-	return (res);
+		*result = '-';
+	result[digits] = '\0';
+	return (result);
 }
 
 /*#include <stdio.h>
 int	main(void)
 {
 	int n = 0;
-	printf("%d\n", count_nums(n));
+	printf("%d\n", count_digits(n));
 	printf("%d\n", n);
 	printf("%s\n", ft_itoa(n));
 }*/

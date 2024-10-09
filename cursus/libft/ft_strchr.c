@@ -15,28 +15,31 @@
 /**
  * @brief Locates the first occurrence of the character c in the string s.
  *
- * This function searches for the first occurrence of the character c (an unsigned char)
- * in the string pointed to by s. The terminating null character is considered to be part
- * of the string, so if c is '\0', the function will return a pointer to the terminator.
+ * This function searches for the first occurrence of the character c
+ *  (an unsigned char)
+ * in the string pointed to by s. The terminating null character is considered
+ *  to be part
+ * of the string, so if c is '\0', the function will return a pointer to the
+ *  terminator.
  *
  * @param s The string to be searched.
  * @param c The character to be located.
- * @return A pointer to the first occurrence of the character c in the string s,
- *         or NULL if the character is not found.
+ * @return A pointer to the first occurrence of the character c in the
+ *  string s, or NULL if the character is not found.
  */
 char	*ft_strchr(const char *s, int c)
 {
-	char	*res;
+	char	*result;
 
-	res = (char *)s;
-	while (*res)
+	result = (char *)s;
+	while (*result)
 	{
-		if (*res == (char)c)
-			return (res);
-		res++;
+		if (*result == (char)c)
+			return (result);
+		result++;
 	}
-	if (*res == (char)c)
-		return (res);
+	if (*result == (char)c)
+		return (result);
 	return (NULL);
 }
 

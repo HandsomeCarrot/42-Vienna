@@ -34,20 +34,20 @@
  */
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char	*res;
+	char	*result;
 	int		pos;
 
-	res = malloc((ft_strlen(s) + 1) * sizeof(char));
-	if (!res)
+	result = malloc((ft_strlen(s) + 1) * sizeof(char));
+	if (!result)
 		return (NULL);
 	pos = 0;
 	while (s[pos])
 	{
-		res[pos] = f(pos, s[pos]);
+		result[pos] = f(pos, s[pos]);
 		pos++;
 	}
-	res[pos] = '\0';
-	return (res);
+	result[pos] = '\0';
+	return (result);
 }
 
 /*char	toupper2(unsigned int n, char c)

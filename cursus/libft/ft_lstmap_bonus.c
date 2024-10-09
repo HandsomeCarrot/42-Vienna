@@ -18,31 +18,32 @@
  * 
  * @param lst The address of a pointer to an element.
  * @param f The address of the function used to iterate on the list.
- * @param del The address of the function used to delete the content of an element if needed.
+ * @param del The address of the function used to delete the content of
+ *  an element if needed.
  * 
  * @return The new list. NULL if the allocation fails.
  */
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list	*res;
-	t_list	*new;
+	t_list	*result;
+	t_list	*new_node;
 
 	if (!lst || !f || !del)
 		return (NULL);
-	res = NULL;
+	result = NULL;
 	while (lst)
 	{
-		new = ft_lstnew(f(lst->content));
-		if (!new)
+		new_node = ft_lstnew(f(lst->content));
+		if (!new_node)
 		{
-			ft_lstclear(&res, del);
-			ft_lstdelone(new, del);
+			ft_lstclear(&result, del);
+			ft_lstdelone(new_node, del);
 			return (NULL);
 		}
-		ft_lstadd_back(&res, new);
+		ft_lstadd_back(&result, new_node);
 		lst = lst->next;
 	}
-	return (res);
+	return (result);
 }
 
 /*#include <stdio.h>

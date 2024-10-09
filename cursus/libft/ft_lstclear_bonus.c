@@ -24,13 +24,13 @@
  */
 void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	t_list	*next;
+	t_list	*next_node;
 
 	while (*lst)
 	{
-		next = (*lst)->next;
+		next_node = (*lst)->next;
 		ft_lstdelone(*lst, del);
-		*lst = next;
+		*lst = next_node;
 	}
 	*lst = NULL;
 }

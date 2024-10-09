@@ -27,13 +27,13 @@
  */
 void	*ft_memset(void *s, int c, size_t n)
 {
-	char	*pos;
+	char	*str;
 
-	pos = s;
+	str = s;
 	while (n > 0)
 	{
-		*pos = c;
-		pos++;
+		*str = c;
+		str++;
 		n--;
 	}
 	return (s);

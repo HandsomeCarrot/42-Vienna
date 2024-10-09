@@ -25,30 +25,30 @@
  */
 static int	count_words(char const *s, char c)
 {
-	int	counter;
-	int	new;
+	int	word_counter;
+	int	new_word;
 	int	pos;
 
-	counter = 0;
+	word_counter = 0;
 	pos = 0;
-	new = 1;
+	new_word = 1;
 	while (s[pos])
 	{
 		if (s[pos] == c)
 		{
 			while (s[pos] == c)
 				pos++;
-			new = 1;
+			new_word = 1;
 		}
-		if (new == 1 && s[pos])
+		if (new_word == 1 && s[pos])
 		{
-			counter++;
-			new = 0;
+			word_counter++;
+			new_word = 0;
 		}
 		if (s[pos])
 			pos++;
 	}
-	return (counter);
+	return (word_counter);
 }
 
 /**
@@ -63,27 +63,28 @@ static int	count_words(char const *s, char c)
  * @param word_len A pointer to the variable storing the word length.
  * @return A pointer to the allocated memory for the word.
  */
-static char	*allocate_word(char **s, char c, int *word_len)
+static char	*allocate_word(char **s, char c)
 {
 	char	*start;
-	char	*word;
+	char	*new_word;
+	int		word_len;
 
 	while (**s == c)
 		(*s)++;
 	start = *s;
-	*word_len = 0;
+	word_len = 0;
 	while (**s && **s != c)
 	{
-		(*word_len)++;
+		word_len++;
 		(*s)++;
 	}
-	word = malloc((*word_len + 1) * sizeof(char));
-	if (!word)
+	new_word = malloc((word_len + 1) * sizeof(char));
+	if (!new_word)
 	{
 		return (NULL);
 	}
-	ft_strlcpy(word, start, *word_len + 1);
-	return (word);
+	ft_strlcpy(new_word, start, word_len + 1);
+	return (new_word);
 }
 
 /**
@@ -96,17 +97,17 @@ static char	*allocate_word(char **s, char c, int *word_len)
  * @param res The result array to be freed.
  * @param words The number of words in the result array.
  */
-static void	free_memory(char ***res, int words)
+static void	free_memory(char **result, int words)
 {
 	int	pos;
 
 	pos = 0;
 	while (pos < words)
 	{
-		free((*res)[pos]);
+		free(result[pos]);
 		pos++;
 	}
-	free(*res);
+	free(result);
 }
 
 /**
@@ -118,30 +119,29 @@ static void	free_memory(char ***res, int words)
  */
 char	**ft_split(char const *s, char c)
 {
-	char	**res;
-	int		words;
-	int		pntr_pos;
-	int		word_len;
+	char	**result;
+	int		word_count;
+	int		cur_str;
 
 	if (!s)
 		return (NULL);
-	words = count_words(s, c);
-	res = malloc((words + 1) * sizeof(char *));
-	if (!res)
+	word_count = count_words(s, c);
+	result = malloc((word_count + 1) * sizeof(char *));
+	if (!result)
 		return (NULL);
-	pntr_pos = 0;
-	while (pntr_pos < words)
+	cur_str = 0;
+	while (cur_str < word_count)
 	{
-		res[pntr_pos] = allocate_word((char **)&s, c, &word_len);
-		if (!res[pntr_pos])
+		result[cur_str] = allocate_word((char **)&s, c);
+		if (!result[cur_str])
 		{
-			free_memory(&res, pntr_pos);
+			free_memory(result, cur_str);
 			return (NULL);
 		}
-		pntr_pos++;
+		cur_str++;
 	}
-	res[pntr_pos] = NULL;
-	return (res);
+	result[cur_str] = NULL;
+	return (result);
 }
 
 /*#include <stdio.h>

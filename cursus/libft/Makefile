@@ -6,10 +6,8 @@ CC = cc
 #compiler flags
 CCFLAGS = -Wall -Wextra -Werror
 
-#archiver with it's flags
+#archiver with it's flags and filename.
 ARNAME = ar rcs $(NAME)
-
-RANNAME = ranlib $(NAME)
 
 #delete with flags
 RM = rm -f
@@ -29,6 +27,8 @@ BONUS_SRCS = $(addprefix ft_, $(addsuffix _bonus.c, lstnew lstadd_back \
 			 lstnew lstsize))
 #turns BONUS source files into object files
 BONUS_OBJS := $(BONUS_SRCS:%.c=%.o)
+#name of the created file for check if any function needs recompilation.
+BONUS = libft_bonus
 
 ALL_OBJS = $(OBJS) $(BONUS_OBJS)
 
@@ -39,10 +39,13 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(ARNAME) $^
 
-#creates the library for mandatory and bonus part
-bonus: $(ALL_OBJS)
+#compiles only bonus files and creates a seperate file named libft_bonus.
+#That file is only there to check if Library needs to be redone (to not re-link)
+$(BONUS) : $(BONUS_OBJS)
 	$(ARNAME) $^
+	touch $(BONUS)
 
+bonus: $(BONUS)
 #compiler with flags, the output file, compile
 # the sourcefile to objectfile without linking
 %.o: %.c
@@ -54,7 +57,7 @@ clean:
 
 #runs clean and deletes library
 fclean: clean
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(BONUS)
 
 #runs fclean and $(NAME)
 re: fclean $(NAME)
